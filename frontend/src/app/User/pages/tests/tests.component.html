@@ -1,0 +1,90 @@
+<div class="test-container">
+<!-- 🔵 Report Card Frame -->
+<div class="frame-box">
+  <h3>📘 Report Card</h3>
+  <div class="filter-bar">
+    <label>Select Term:</label>
+    <select [(ngModel)]="selectedTerm" (change)="fetchReportCard()">
+      <option value="" disabled selected>-- Select Term --</option>
+      <option *ngFor="let term of terms" [value]="term">{{ term }}</option>
+    </select>
+  </div>
+
+  <table class="report-table">
+    <thead>
+      <tr>
+        <th>Serial No</th>
+        <th>Term</th>
+        <th>Subject</th>
+        <th>Total</th>
+        <th>Answered</th>
+        <th>Remark</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of reportCardData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ row.term }}</td>
+        <td>{{ row.subject }}</td>
+        <td>{{ row.totalMark }}</td>
+        <td>{{ row.answeredMark }}</td>
+        <td>{{ row.remark || '-' }}</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="3"><strong>Total</strong></td>
+        <td><strong>{{ getTotal(reportCardData).total }}</strong></td>
+        <td><strong>{{ getTotal(reportCardData).answered }}</strong></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- 🟨 Daily Test Frame -->
+  <div class="frame-box">
+    <h3>📝 Daily Test</h3>
+    <div class="filter-bar">
+      <label>Select Test No:</label>
+      <select [(ngModel)]="selectedTestNo" (change)="fetchDailyTest()">
+        <option value="" disabled selected>-- Select Test No --</option>
+        <option *ngFor="let test of testNumbers" [value]="test">{{ test }}</option>
+      </select>
+    </div>
+
+    <div class="daily-test-scroll-wrapper">
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>Serial No</th>
+          <th>Test No</th>
+          <th>Subject</th>
+          <th>Topic</th>
+          <th>Question No</th>
+          <th>Mark of the Question</th>
+          <th>Answered</th>
+          <th>Remark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of dailyTestData; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ row.testId }}</td>
+          <td>{{ row.subject }}</td>
+          <td>{{ row.term }}</td>
+          <td>{{ i + 1 }}</td>
+          <td>{{ row.totalMark }}</td>
+          <td>{{ row.answeredMark }}</td>
+          <td>{{ row.remark || '-' }}</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="5"><strong>Total</strong></td>
+          <td><strong>{{ getTotal(dailyTestData).total }}</strong></td>
+          <td><strong>{{ getTotal(dailyTestData).answered }}</strong></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+</div>

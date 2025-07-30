@@ -1,0 +1,106 @@
+<div class="homework-frame">
+
+  <!-- 🔷 TAB HEADER -->
+  <div class="tab-header">
+    <button [class.active]="activeTab === 'view'" (click)="switchTab('view')">VIEW HOMEWORK</button>
+    <button [class.active]="activeTab === 'upload'" (click)="switchTab('upload')">UPLOAD HOMEWORK</button>
+  </div>
+
+  <!-- 🟦 VIEW HOMEWORK SECTION -->
+  <div *ngIf="activeTab === 'view'" class="homework-form-section">
+    <h2>📘 View Assigned Homework</h2>
+
+    <div class="form-section">
+      <label>Grade</label>
+      <select [(ngModel)]="viewGrade" (change)="onGradeChange()">
+        <option value="">-- Select Grade --</option>
+        <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+      </select>
+
+      <label>Section</label>
+      <select [(ngModel)]="viewSection">
+        <option value="">-- Select Section --</option>
+        <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+      </select>
+
+      <button (click)="fetchHomework()">View</button>
+    </div>
+
+    <!-- 🧾 Homework Table -->
+<div class="homework-table-scroll-wrapper" *ngIf="viewData.length > 0">
+  <table class="homework-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Staff Name</th>
+          <th>Subject</th>
+          <th>Topic</th>
+          <th>File</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of viewData; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ row.date | date }}</td>
+          <td>{{ row.staffName }}</td>
+          <td>{{ row.subject }}</td>
+          <td>{{ row.topic }}</td>
+          <td>
+            <button *ngIf="isPDF(row.filePath)" (click)="openDirectPdf(row.filePath)">
+              📄 PDF
+            </button>
+            <button *ngIf="isImage(row.filePath)" (click)="openDirectPdf(row.filePath)">
+              🖼️ Image
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  </div>
+
+  <!-- 🟩 UPLOAD HOMEWORK SECTION -->
+  <div *ngIf="activeTab === 'upload'" class="homework-form-section">
+    <h2>📤 Upload Homework</h2>
+
+    <div class="form-section">
+      <label>Student Name</label>
+      <input type="text" [(ngModel)]="studentName" disabled />
+
+      <label>Roll No</label>
+      <input type="text" [(ngModel)]="rollNo" disabled />
+
+
+
+      <label>Grade</label>
+      <input type="text" [(ngModel)]="uploadGrade" disabled />
+
+      <label>Section</label>
+      <input type="text" [(ngModel)]="uploadSection" disabled />
+
+      <label>Subject</label>
+      <select [(ngModel)]="subject">
+        <option value="">-- Select Subject --</option>
+        <option *ngFor="let sub of homeworkSubjects" [value]="sub">{{ sub }}</option>
+      </select>
+
+      <label>Topic</label>
+      <select [(ngModel)]="topic">
+        <option value="">-- Select Topic --</option>
+        <option *ngFor="let top of homeworkTopics" [value]="top">{{ top }}</option>
+      </select>
+
+      <label>File (PDF Only)</label>
+      <input type="file" (change)="onUploadFileChange($event)" accept="application/pdf" />
+
+     <div *ngIf="uploadPreviewUrl">
+  <iframe [src]="uploadPreviewUrl" width="100%" height="400px"></iframe>
+</div>
+
+
+      <button (click)="submitHomeworkUpload()">Submit Homework</button>
+    </div>
+  </div>
+</div>

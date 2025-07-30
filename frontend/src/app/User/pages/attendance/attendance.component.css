@@ -1,0 +1,72 @@
+.attendance-frame {
+  border: 2px solid violet;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #faf6ff;
+  max-width: 1000px;
+  margin: 40px auto 0 auto; 
+  text-align: center;
+}
+
+.attendance-heading {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.filter-section input,
+.filter-section button {
+  margin: 0 10px;
+  padding: 6px 10px;
+}
+
+.attendance-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+canvas {
+  max-width: 280px;
+  max-height: 280px;
+  margin: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-top: 20px;
+  width: 400px;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+.legend {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-weight: bold;
+}
+
+.color {
+  display: inline-block;
+  width: 20px;
+  height: 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.green { background-color: #00FF00; }
+.red { background-color: #FF0000; }
+.blue { background-color: #00008B; }
+.brown { background-color: #8B4513; }

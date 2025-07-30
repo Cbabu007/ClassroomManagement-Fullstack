@@ -1,0 +1,235 @@
+/* 💜 Page Wrapper */
+.dashboard-wrapper {
+  background-color: #fbeaff;
+  padding: 30px 20px 20px 20px;
+  min-height: 100vh;
+  margin-top: 30px; /* Adds space below top menu */
+}
+
+/* 📐 Layout container */
+.main-flex-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* 🟢 Left Side - Info and Report Section */
+.left-side {
+  flex: 2;
+}
+
+/* 🟣 Right Side - Leaderboard */
+.right-side {
+  flex: 1.2; /* 🔍 Increase from 1 to 1.2 or more as needed */
+}
+
+
+.leaderboard {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard h4 {
+  font-size: 18px;
+  color: #6a1b9a;
+  margin-bottom: 12px;
+}
+
+.leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.leader-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+.rank {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.name {
+  flex-grow: 1;
+  font-size: 14px;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.trophy-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* 🎯 Info Cards */
+.dashboard-header {
+  display: flex;
+  gap: 20px;
+}
+
+.hello-box,
+.next-action {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  flex: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hello-box h3,
+.next-action h4 {
+  margin-bottom: 10px;
+  color: #6a1b9a;
+}
+
+.next-btn {
+  margin-top: 10px;
+  background-color: #8e44ad;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* 🧭 Tab Buttons */
+.tab-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+  margin-bottom: 20px; /* adds space below */
+}
+
+.tab-toggle button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: 2px solid #8e44ad;
+  background-color: transparent;
+  color: #8e44ad;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.tab-toggle button.active {
+  background-color: #8e44ad;
+  color: white;
+}
+
+/* 📂 Tab Content */
+.tab-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content label {
+  font-weight: bold;
+}
+
+.tab-content select {
+  margin-left: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+/* 📊 Chart + Pie */
+.report-split-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.chart-column {
+  flex: 2;
+  min-width: 500px;
+  text-align: center;
+}
+
+.subject-pie-frame {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.subject-pie {
+  text-align: center;
+  width: 120px;
+}
+
+.subject-pie canvas {
+  width: 100%;
+  height: 120px;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+/* ✅ RESPONSIVE LAYOUT */
+@media (max-width: 992px) {
+  .main-flex-layout {
+    flex-direction: column;
+  }
+
+  .left-side,
+  .right-side {
+    width: 100%;
+    flex: none;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+  }
+
+  .tab-toggle {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .tab-toggle button {
+    width: 80%;
+    text-align: center;
+  }
+
+  .chart-column {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .subject-pie-frame {
+    justify-content: center;
+  }
+}

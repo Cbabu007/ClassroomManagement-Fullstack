@@ -1,0 +1,51 @@
+.activity-container {
+  padding: 20px;
+  max-width: 100%;
+  overflow-x: auto; /* ✅ Allows horizontal scroll on small screens */
+}
+
+.activity-table {
+  width: 100%;
+  min-width: 800px; /* ✅ Prevent table from breaking on mobile */
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.activity-table th,
+.activity-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  white-space: nowrap; /* ✅ Prevent text wrapping */
+}
+
+.activity-table th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+}
+
+.download-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #8e44ad;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #732d91;
+}
+
+/* ✅ Mobile-specific tweaks */
+@media screen and (max-width: 768px) {
+  .activity-container {
+    padding: 10px;
+  }
+
+  .download-btn {
+    width: 100%;
+    font-size: 14px;
+  }
+}

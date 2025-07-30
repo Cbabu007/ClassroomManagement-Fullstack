@@ -1,0 +1,65 @@
+.attendance-full-frame {
+  background-color: #faf9ff;
+  border: 2px solid #c59cff;
+  border-radius: 15px;
+  padding: 25px;
+  margin: 20px auto;
+  max-width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.attendance-filter-frame {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.attendance-filter-frame label {
+  font-weight: bold;
+}
+
+.attendance-filter-frame select,
+.attendance-filter-frame button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.attendance-filter-frame button {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+.attendance-table-frame table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.attendance-table-frame th,
+.attendance-table-frame td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.attendance-table-frame th {
+  background-color: #ede7f6;
+}
+
+.attendance-table-frame button {
+  margin-top: 15px;
+  background-color: #7300e6;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

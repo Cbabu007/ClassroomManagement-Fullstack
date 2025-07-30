@@ -1,0 +1,112 @@
+/* 🔲 Main container */
+.test-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+}
+
+/* 🧾 Framed sections */
+.frame-box {
+  border: 2px solid #c5b8f3;
+  border-radius: 10px;
+  background-color: #fcfbff;
+  padding: 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+  overflow-x: auto; /* 🆕 for scroll on small devices */
+}
+
+/* 🔍 Filter row */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* 🆕 wrap filters on mobile */
+  margin-bottom: 15px;
+}
+
+.filter-bar label {
+  font-weight: bold;
+}
+
+.filter-bar select {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* 📊 Table */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* 🆕 prevent too narrow columns */
+  margin-top: 10px;
+  background-color: #fff;
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #ccc;
+  padding: 10px 14px;
+  text-align: center;
+  white-space: nowrap; /* 🆕 avoid text break */
+}
+
+.report-table th {
+  background-color: #f0f0f5;
+  font-weight: bold;
+}
+
+.total-row td {
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+/* 📱 Responsive adjustments */
+@media (max-width: 768px) {
+  .filter-bar select {
+    font-size: 13px;
+  }
+
+  .report-table th,
+  .report-table td {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .frame-box {
+    padding: 15px;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-bar label {
+    margin-bottom: 5px;
+  }
+
+  .report-table th,
+  .report-table td {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+}
+/* 🟦 Scrollable Daily Test wrapper */
+.daily-test-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* 👇 Optional: Smooth scroll bar for WebKit browsers */
+.daily-test-scroll-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+.daily-test-scroll-wrapper::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 4px;
+}

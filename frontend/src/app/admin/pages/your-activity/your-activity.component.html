@@ -1,0 +1,34 @@
+<div class="activity-container">
+  <h2>📘 Login Activity</h2>
+
+  <table class="activity-table" *ngIf="activityList.length > 0">
+    <thead>
+      <tr>
+        <th>Serial No.</th>
+        <th>Browse</th>
+        <th>Day</th>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Login Time</th>
+        <th>Logout Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of activityList; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.browse }}</td>
+        <td>{{ item.day }}</td>
+        <td>{{ item.month }}</td>
+        <td>{{ item.year }}</td>
+        <td>{{ item.loginTime }}</td>
+        <td>{{ item.logoutTime }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="activityList.length === 0">
+    <p>No login activity found.</p>
+  </div>
+
+  <button class="download-btn" (click)="downloadPDF()">📄 Download PDF</button>
+</div>

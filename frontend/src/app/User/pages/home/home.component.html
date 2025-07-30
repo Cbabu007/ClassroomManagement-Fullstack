@@ -1,0 +1,87 @@
+<div class="dashboard-wrapper">
+  <div class="main-flex-layout">
+
+    <!-- 🔵 LEFT SIDE — Info + Charts/Table -->
+    <div class="left-side">
+      <div class="dashboard-header">
+        <div class="hello-box">
+          <h3>Hello!</h3>
+          <p>"Dream big, work hard, stay focused."</p>
+        </div>
+
+        <div class="next-action">
+          <h4>Next Action</h4>
+          <p>{{ nextAction }}</p>
+          <button class="next-btn">Next</button>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tab-toggle">
+        <button [class.active]="selectedTab === 'reportcard'" (click)="selectTab('reportcard')">Report Card</button>
+        <button [class.active]="selectedTab === 'dailytest'" (click)="selectTab('dailytest')">Daily Test</button>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Report Card Tab -->
+        <div *ngIf="selectedTab === 'reportcard'">
+          <label>Filter Term:</label>
+          <select [(ngModel)]="selectedTerm" (change)="fetchReportCard()">
+            <option *ngFor="let term of terms">{{ term }}</option>
+          </select>
+
+          <div class="report-split-layout">
+    <!-- ✅ Replace this canvas -->
+<div class="chart-column" id="reportCardChartWrapper"></div>
+
+            <div class="subject-pie-frame">
+              <div *ngFor="let subj of subjectStats" class="subject-pie">
+                <canvas [attr.id]="'pie-' + subj.subject"></canvas>
+                <p>{{ subj.subject }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Test Tab -->
+        <div *ngIf="selectedTab === 'dailytest'">
+          <label>Filter Test No:</label>
+          <select [(ngModel)]="selectedTestNo" (change)="fetchDailyTest()">
+            <option *ngFor="let test of testNumbers">{{ test }}</option>
+          </select>
+
+          <div class="report-split-layout">
+           <div class="chart-column" id="dailyTestChartWrapper"></div>
+
+            <div class="subject-pie-frame">
+              <div *ngFor="let subj of testSubjectStats" class="subject-pie">
+                <canvas [attr.id]="'pie-' + subj.subject"></canvas>
+                <p>{{ subj.subject }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🟣 RIGHT SIDE — Leaderboard -->
+    <div class="right-side" style="width: 320px">
+      <div class="leaderboard">
+        <h4>Leaderboard</h4>
+        <ul class="leaderboard-list">
+          <li *ngFor="let user of leaderboard; let i = index" class="leaderboard-item">
+            <span class="rank">{{ i + 1 }}</span>
+            <img [src]="getImage(user.photoPath)" class="leader-img" alt="User" />
+            <span class="name">{{ user.name }}</span>
+            <span class="score">
+              <img src="https://cdn-icons-png.flaticon.com/512/3112/3112946.png" class="trophy-icon" />
+              {{ user.trophies }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>

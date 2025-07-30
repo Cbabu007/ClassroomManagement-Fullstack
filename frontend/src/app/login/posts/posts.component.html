@@ -1,0 +1,22 @@
+<div class="posts-container">
+  <h2>📢 School Announcements</h2>
+
+  <table *ngIf="events.length > 0" class="posts-table">
+    <thead>
+      <tr>
+        <th>Serial No</th>
+        <th>Date</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ event.date | date: 'dd MMM yyyy' }}</td>
+        <td>{{ event.message }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="events.length === 0">No announcements found.</p>
+</div>

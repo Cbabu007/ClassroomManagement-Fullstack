@@ -1,0 +1,23 @@
+<div class="report-frame">
+  <h2>📝 Submit Your Report</h2>
+
+  <form (ngSubmit)="submitReport()">
+    <label>Grade:</label>
+    <select [(ngModel)]="report.grade" name="grade" required>
+      <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+    </select>
+
+    <label>Section:</label>
+    <select [(ngModel)]="report.section" name="section" required>
+      <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+    </select>
+
+    <label>Date:</label>
+    <input type="date" [(ngModel)]="report.reportDate" name="reportDate" required />
+
+    <label>Message:</label>
+    <input type="text" [(ngModel)]="report.message" name="message" required />
+
+    <button type="submit">Submit</button>
+  </form>
+</div>

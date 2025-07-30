@@ -1,0 +1,79 @@
+.message-container {
+  background-color: #fcf8ff;
+  border: 2px solid #d1c4e9;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 1000px;
+  margin: 30px auto;
+  box-shadow: 0 4px 10px rgba(128, 90, 213, 0.1);
+  overflow-x: auto;
+}
+
+.add-message-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-message-form input {
+  flex: 1 1 180px;
+  padding: 10px;
+  border: 1px solid #b39ddb;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.add-message-form button {
+  background-color: #7e57c2;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.add-message-form button:hover {
+  background-color: #5e35b1;
+}
+
+table {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #d1c4e9;
+}
+
+thead th, tbody td {
+  padding: 12px;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f3e5f5;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #ede7f6;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #c62828;
+}

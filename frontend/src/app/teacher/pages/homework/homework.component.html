@@ -1,0 +1,279 @@
+<div class="homework-full-frame">
+  <!-- Top Tabs -->
+  <div class="homework-tabs">
+    <button [class.active]="activeTab === 'assign'" (click)="setTab('assign')">HOMEWORK</button>
+      </div>
+
+  <!-- ASSIGNED HOMEWORK Modes -->
+  <div *ngIf="activeTab === 'assign'" class="homework-form-frame">
+    <div class="homework-tabs">
+      <button [class.active]="mode === 'Create'" (click)="setMode('Create')">CREATE</button>
+      <button [class.active]="mode === 'Edit'" (click)="setMode('Edit')">EDIT</button>
+      <button [class.active]="mode === 'View'" (click)="setMode('View')">VIEW</button>
+      <button [class.active]="mode === 'Delete'" (click)="setMode('Delete')">DELETE</button>
+      <button [class.active]="mode === 'Correct'" (click)="setMode('Correct')">CORRECT</button>
+      <button [class.active]="mode === 'Completed'" (click)="setMode('Completed')">COMPLETED</button>
+
+    </div>
+
+    <!-- ✅ CREATE -->
+    <div *ngIf="mode === 'Create'" class="homework-form-grid">
+      <label>Grade</label>
+      <select [(ngModel)]="grade" (change)="onGradeOrSectionChange()">
+        <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+      </select>
+
+      <label>Section</label>
+      <select [(ngModel)]="section" (change)="onGradeOrSectionChange()">
+        <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+      </select>
+
+      <label>Classroom No</label>
+      <input type="text" [(ngModel)]="classroomNo" readonly style="background-color: #eee;" />
+
+
+      <label>Date</label>
+      <input type="date" [(ngModel)]="date" />
+
+      <label>Staff</label>
+      <select [(ngModel)]="staffId" (change)="onStaffChange()">
+        <option *ngFor="let staff of staffList" [value]="staff.staffId">{{ staff.name }}</option>
+      </select>
+
+      <label>Subject</label>
+      <input type="text" [(ngModel)]="subject" readonly placeholder="Subject will appear here" />
+
+      <label>Topic</label>
+      <input type="text" [(ngModel)]="topic" />
+
+      <label>File (Optional)</label>
+      <input type="file" (change)="onFileChange($event)" />
+
+      <div *ngIf="previewUrl" class="preview-container">
+        <p><b>Preview:</b></p>
+        <img [src]="previewUrl" alt="Preview" class="preview-image" />
+      </div>
+
+      <div class="homework-form-actions">
+        <button (click)="submitHomework()">Submit</button>
+      </div>
+    </div>
+
+    <!-- ✅ EDIT -->
+    <div *ngIf="mode === 'Edit'" class="homework-form-grid">
+      <label>Grade</label>
+      <select [(ngModel)]="grade">
+        <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+      </select>
+
+      <label>Section</label>
+      <select [(ngModel)]="section">
+        <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+      </select>
+
+      <label>Subject</label>
+<select [(ngModel)]="subject">
+  <option *ngFor="let sub of subjects" [value]="sub">{{ sub }}</option>
+</select>
+
+
+      <label>Date</label>
+      <input type="date" [(ngModel)]="date" />
+
+      <button (click)="loadHomeworkForEdit()">OK</button>
+
+      <hr />
+
+      <label>Topic</label>
+      <input type="text" [(ngModel)]="topic" />
+
+      <label>Replace File</label>
+      <input type="file" (change)="onFileChange($event)" />
+
+      <!-- 📸 File Preview -->
+      <div *ngIf="previewUrl" style="text-align: center; margin-top: 15px;">
+        <img *ngIf="!previewUrl.endsWith('.pdf')" [src]="previewUrl" style="max-width: 250px;" />
+        <div *ngIf="previewUrl.endsWith('.pdf')">
+          <a [href]="previewUrl" target="_blank">📄 View PDF</a>
+        </div>
+      </div>
+      
+      
+
+
+      <div class="homework-form-actions">
+        <button (click)="submitEdit()">Update</button>
+      </div>
+    </div>
+
+    <!-- ✅ VIEW -->
+<div *ngIf="mode === 'View'" class="homework-form-grid">
+  <label>Grade</label>
+  <select [(ngModel)]="grade">
+    <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+  </select>
+
+  <label>Section</label>
+  <select [(ngModel)]="section">
+    <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+  </select>
+
+  <label>Subject</label>
+  <input type="text" [(ngModel)]="subject" placeholder="Enter Subject" />
+
+  <label>Date</label>
+  <input type="date" [(ngModel)]="date" />
+
+ <button class="ok-btn" (click)="loadHomeworkForView()">View</button>
+
+
+  <hr />
+
+  <div *ngIf="viewData">
+    <p><b>Topic:</b> {{ viewData.topic }}</p>
+    <p><b>Date:</b> {{ viewData.date | date }}</p>
+    <div *ngIf="viewData.filepath?.endsWith('.pdf')">
+      <a [href]="viewData.filepath" target="_blank">📄 View PDF</a> |
+      <a [href]="viewData.filepath" download>⬇️ Download PDF</a>
+    </div>
+    
+    <div *ngIf="!viewData.filepath?.endsWith('.pdf')">
+      <img [src]="viewData.filepath" alt="Homework Preview" style="max-width: 200px;" />
+    </div>
+  </div>
+</div>
+
+
+  <!-- ✅ DELETE -->
+<div *ngIf="mode === 'Delete'" class="homework-form-grid">
+  <label>Grade</label>
+  <select [(ngModel)]="grade">
+    <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+  </select>
+
+  <label>Section</label>
+  <select [(ngModel)]="section">
+    <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+  </select>
+
+  <label>Subject</label>
+  <input type="text" [(ngModel)]="subject" />
+
+  <label>Date</label>
+  <input type="date" [(ngModel)]="date" />
+
+  <button class="delete-btn" (click)="deleteHomework()">Delete</button>
+
+</div>
+
+<div *ngIf="mode === 'Correct'" class="homework-form-grid">
+  <label>Grade</label>
+  <select [(ngModel)]="correctGrade" (change)="fetchTopics()">
+    <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+  </select>
+
+  <label>Section</label>
+  <select [(ngModel)]="correctSection" (change)="fetchTopics()">
+    <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+  </select>
+
+  <label>Subject</label>
+  <select [(ngModel)]="correctSubject" (change)="fetchTopics()">
+    <option *ngFor="let sub of subjects" [value]="sub">{{ sub }}</option>
+  </select>
+
+  <label>Topic</label>
+  <select [(ngModel)]="correctTopic">
+    <option *ngFor="let t of topics" [value]="t">{{ t }}</option>
+  </select>
+
+  <label>Date</label>
+  <input type="date" [(ngModel)]="correctDate" />
+
+  <button class="ok-btn" (click)="loadCorrectHomeworkData()">OK</button>
+
+  <table *ngIf="correctHomeworkList.length" class="homework-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Student</th>
+      <th>Roll No.</th>
+      <th>PDF</th>
+      <th>Mark</th>
+      <th>✔️</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let hw of correctHomeworkList; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ hw.name }}</td>
+      <td>{{ hw.rollNo }}</td>
+      <td><a [href]="'https://localhost:7284' + hw.filePath" target="_blank" rel="noopener noreferrer">
+  📄 View
+</a>
+</td>
+      <td>
+  <input type="number" [(ngModel)]="hw.mark" placeholder="Enter mark" />
+</td>
+
+      <td><input type="checkbox" [(ngModel)]="hw.marked" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<button *ngIf="correctHomeworkList.length" class="submit-btn" (click)="submitCorrectedHomework()">Submit</button>
+</div>
+<!-- ✅ COMPLETED -->
+<div *ngIf="mode === 'Completed'" class="homework-form-grid">
+  <label>Grade</label>
+  <select [(ngModel)]="completedGrade">
+    <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+  </select>
+
+  <label>Section</label>
+  <select [(ngModel)]="completedSection">
+    <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+  </select>
+
+  <label>Subject</label>
+  <select [(ngModel)]="completedSubject">
+    <option *ngFor="let sub of subjects" [value]="sub">{{ sub }}</option>
+  </select>
+
+ <label>Topic</label>
+<select [(ngModel)]="completedTopic">
+  <option *ngFor="let t of topics" [value]="t">{{ t }}</option>
+</select>
+
+
+  <label>Date</label>
+  <input type="date" [(ngModel)]="completedDate" />
+
+ <button class="ok-btn" (click)="loadCompletedHomework()">OK</button>
+
+
+  <table *ngIf="completedList.length" class="homework-table">
+    <thead>
+      <tr>
+        <th>Serial No.</th>
+        <th>Roll No.</th>
+        <th>Date</th>
+        <th>Student Name</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of completedList; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ row.rollNo }}</td>
+        <td>{{ row.date | date }}</td>
+        <td>{{ row.name }}</td>
+        <td>
+          <span [ngClass]="{'completed-status': row.action === 'Correct', 'not-completed-status': row.action !== 'Correct'}">
+            {{ row.action === 'Correct' ? 'Completed' : 'Not Completed' }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

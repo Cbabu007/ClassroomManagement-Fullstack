@@ -1,0 +1,22 @@
+<div class="contact-wrapper" *ngIf="contact">
+  <h2>📞 School Contact Details</h2>
+
+  <div class="contact-box">
+    <p><strong>🏫 School Name:</strong> {{ contact.schoolName }}</p>
+    <p><strong>📍 Address:</strong> {{ contact.address }}</p>
+    <p><strong>📞 Office Phone:</strong> {{ contact.officePhone }}</p>
+    <p><strong>📱 Mobile:</strong> {{ contact.mobile }}</p>
+    <p><strong>✉️ Email:</strong> <a [href]="'mailto:' + contact.email">{{ contact.email }}</a></p>
+    <p><strong>🌐 Website:</strong> <a [href]="contact.website" target="_blank">{{ contact.website }}</a></p>
+    <p><strong>🕐 Working Hours:</strong> {{ contact.workingHours }}</p>
+
+    <h3>🌍 Social Media</h3>
+    <p><strong>📘 Facebook:</strong> <a [href]="contact.facebook" target="_blank">{{ contact.facebook }}</a></p>
+    <p><strong>📸 Instagram:</strong> <a [href]="contact.instagram" target="_blank">{{ contact.instagram }}</a></p>
+    <p><strong>🐦 Twitter:</strong> <a [href]="contact.twitter" target="_blank">{{ contact.twitter }}</a></p>
+  </div>
+</div>
+
+<div *ngIf="!contact">
+  <p>Loading contact information...</p>
+</div>

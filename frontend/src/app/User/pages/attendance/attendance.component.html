@@ -1,0 +1,38 @@
+<div class="attendance-frame">
+  <h3 class="attendance-heading">Attendance</h3>
+  <div class="filter-section">
+    <label>FROM:</label>
+    <input type="date" [(ngModel)]="fromDate" />
+    <label>TO:</label>
+    <input type="date" [(ngModel)]="toDate" />
+    <button (click)="fetchAttendance()">OK</button>
+  </div>
+
+  <div class="attendance-content">
+    <canvas id="attendanceChart"></canvas>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Serial No</th>
+          <th>Date on Leave</th>
+          <th>Leave Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of attendanceData">
+          <td>{{ entry.serialNo }}</td>
+          <td>{{ entry.date }}</td>
+          <td>{{ entry.leaveType }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <div><span class="color green"></span> Present</div>
+    <div><span class="color red"></span> Absent</div>
+    <div><span class="color blue"></span> Half Present</div>
+    <div><span class="color brown"></span> Half Absent</div>
+  </div>
+</div>

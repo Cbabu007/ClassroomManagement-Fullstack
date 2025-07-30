@@ -1,0 +1,30 @@
+<div class="profile-container">
+  <h2>📋 Your Profile</h2>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div *ngIf="!errorMessage" class="profile-box">
+ <img 
+  [src]="photoPreviewUrl" 
+  class="photo-preview-img"
+  alt="Profile Photo"
+  (error)="photoPreviewUrl='https://cdn-icons-png.flaticon.com/512/3177/3177440.png'" 
+/>
+
+    <div class="details">
+      <p><strong>Student ID:</strong> {{ profile.studentId }}</p>
+      <p><strong>Name:</strong> {{ profile.firstName }} {{ profile.lastName }}</p>
+      <p><strong>Grade:</strong> {{ profile.grade }}</p>
+      <p><strong>Section:</strong> {{ profile.section }}</p>
+      <p><strong>Email:</strong> {{ profile.email }}</p>
+      <p><strong>Mobile:</strong> {{ profile.mobile }}</p>
+      <p><strong>Alt Mobile:</strong> {{ profile.altMobile }}</p>
+      <p><strong>Roll No:</strong> {{ profile.rollNo }}</p>
+      <p><strong>DOB:</strong> {{ profile.dob | date:'dd-MM-yyyy' }}</p>
+      <p><strong>Address:</strong><br>
+        {{ profile.doorNo }}, {{ profile.address1 }}, {{ profile.address2 }}<br>
+        {{ profile.city }}, {{ profile.district }}, {{ profile.state }} - {{ profile.pincode }}
+      </p>
+    </div>
+  </div>
+</div>

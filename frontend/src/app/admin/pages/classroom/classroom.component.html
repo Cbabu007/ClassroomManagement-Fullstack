@@ -1,0 +1,297 @@
+<div class="classroom-frame">
+    <!-- Tab Menu -->
+    <div class="classroom-tabs">
+      <button [class.active]="activeTab === 'add'" (click)="setTab('add')">ADD ASSIGNED CLASSROOM</button>
+      <button [class.active]="activeTab === 'edit'" (click)="setTab('edit')">EDIT ASSIGNED CLASSROOM</button>
+      <button [class.active]="activeTab === 'delete'" (click)="setTab('delete')">DELETE ASSIGNED CLASSROOM</button>
+      <button [class.active]="activeTab === 'view'" (click)="setTab('view')">VIEW ASSIGNED CLASSROOM</button>
+  </div>
+  
+    <div class="classroom-frame" *ngIf="activeTab === 'add'">
+      <!-- Title -->
+      <h2 class="title">🧑‍🏫 Assign Classroom</h2>
+  
+      <!-- Classroom Basic Details -->
+      <div class="form-grid">
+        <div>
+          <label>Classroom No</label>
+          <select [(ngModel)]="classroom.classroomNo">
+            <option *ngFor="let n of classroomNumbers" [value]="n">{{ n }}</option>
+          </select>
+        </div>
+  
+        <div>
+          <label>Class</label>
+          <select [(ngModel)]="classroom.class" (change)="fetchStudentsByClass(classroom.class)">
+            <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
+          </select>
+        </div>
+  
+        <div>
+          <label>Section</label>
+          <select [(ngModel)]="classroom.section">
+            <option *ngFor="let sec of sections" [value]="sec">{{ sec }}</option>
+          </select>
+        </div>
+  
+        <div>
+          <label>Class Teacher</label>
+          <select [(ngModel)]="classroom.classTeacherId">
+            <option *ngFor="let teacher of classTeachersList" [value]="teacher.staffId">{{ teacher.staffName }}</option>
+          </select>
+          
+          
+          
+        </div>
+      </div>
+  
+      <!-- Subject and Staff Assignment -->
+      <div class="subject-staff-section">
+        <h4>📚 Subjects and Assigned Staffs</h4>
+  
+        <div *ngFor="let subjectStaff of subjectStaffList; let i = index" class="subject-staff-entry">
+            <!-- Subject Dropdown -->
+            <select [(ngModel)]="subjectStaff.subject" (change)="onSubjectChange(i)">
+              <option *ngFor="let subj of subjectOptions" [value]="subj.subject">{{ subj.subject }}</option>
+            </select>
+          
+            <!-- Staff Dropdown (Not readonly now) -->
+            <select [(ngModel)]="subjectStaff.staff">
+              <option *ngFor="let staff of staffList" [value]="staff">{{ staff }}</option>
+            </select>
+          
+            <button class="remove-btn" (click)="removeSubjectStaff(i)">❌</button>
+          </div>
+          
+        <button class="add-more-btn" (click)="addSubjectStaff()">➕ Add More</button>
+      </div>
+  
+      <!-- Students Selection -->
+      <div class="students-section">
+        <label>🎒 Students</label>
+        <div class="student-add-row">
+            <select [(ngModel)]="selectedStudent" class="student-select">
+                <option *ngFor="let student of availableStudents" [ngValue]="student">
+  {{ student.studentName }}
+</option>
+
+              </select>
+              
+          <button type="button" (click)="addStudent()" class="add-student-btn">+ Add</button>
+        </div>
+  
+        <table class="student-table" *ngIf="addedStudents.length > 0">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let student of addedStudents; let i = index">
+             <td>{{ student.studentName }}</td>  <!-- ✅ Correct -->
+
+              <td><button type="button" (click)="removeStudent(i)" class="remove-btn">❌</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Save Button -->
+      <div class="submit-section">
+        <button type="button" class="save-classroom-btn" (click)="saveAssignedClassroom()">Save Assigned Classroom</button>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'edit'" class="edit-form">
+        <h2>🧑‍🏫 Edit Assigned Classroom</h2>
+      
+        <div class="form-grid">
+          <div>
+            <label>Select Classroom</label>
+            <select [(ngModel)]="selectedEditClassroomId" (change)="fetchClassroomToEdit()">
+              <option *ngFor="let classroom of assignedClassroomsList" [value]="classroom.id">
+                {{ classroom.class }} {{ classroom.section }} (Room {{ classroom.classroomNo }})
+              </option>
+            </select>
+          </div>
+        </div>
+      
+        <div *ngIf="editClassroom">
+          <!-- Basic Classroom Details -->
+          <div class="form-grid">
+
+            <div>
+              <label>Classroom No</label>
+              <select [(ngModel)]="editClassroom.classroomNo">
+                <option *ngFor="let n of classroomNumbers" [value]="n">{{ n }}</option>
+              </select>
+            </div>
+          
+            <div>
+              <label>Class</label>
+              <select [(ngModel)]="classroom.class" (change)="fetchStudentsByClass(classroom.class)">
+                <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
+              </select>
+            </div>
+      
+          
+            <div>
+              <label>Section</label>
+              <select [(ngModel)]="editClassroom.section">
+                <option *ngFor="let sec of sections" [value]="sec">{{ sec }}</option>
+              </select>
+            </div>
+            
+            <div>
+              <label>Class Teacher</label>
+              <input [(ngModel)]="editClassroom.classTeacherName" type="text">
+            </div>
+          </div>
+      
+          <!-- Subjects -->
+          <h4>📚 Subjects and Assigned Staffs</h4>
+          <div *ngFor="let subj of editSubjectStaffList; let i = index" class="subject-staff-entry">
+            <select [(ngModel)]="subj.subject">
+                <option *ngFor="let subject of subjectOptions" [value]="subject.subject">{{ subject.subject }}</option>
+              </select>
+              
+              <select [(ngModel)]="subj.staffName">
+                <option *ngFor="let staff of staffList" [value]="staff">{{ staff }}</option>
+              </select>
+              
+            <button class="remove-btn" (click)="removeSubjectEdit(i)">❌</button>
+          </div>
+          <button class="add-btn" (click)="addSubjectEdit()">➕ Add Subject</button>
+      
+<!-- 🎒 Students -->
+<h4>🎒 Students</h4>
+
+<div class="student-add-row">
+  <select [(ngModel)]="selectedStudentToAdd" class="student-select">
+    <option *ngFor="let student of availableStudents" [ngValue]="student">
+  {{ student.studentName }}
+</option>
+
+  </select>
+
+  <button (click)="addStudentEdit()" class="add-student-btn">➕ Add Student</button>
+</div>
+
+<!-- 📋 Student Table -->
+<table class="student-table" *ngIf="editStudentList.length > 0">
+  <thead>
+    <tr>
+      <th>Student Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of editStudentList; let i = index">
+      <td>{{ student.studentName }}</td> <!-- ✅ Correct: student.studentName -->
+      <td>
+        <button (click)="removeStudentEdit(i)" class="remove-btn">❌</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+ 
+          <!-- Save Button -->
+          <div class="submit-section">
+            <button class="save-classroom-btn" (click)="updateAssignedClassroom()">✅ Save Updated Classroom</button>
+          </div>
+        </div>
+      </div>
+      <!-- 🔵 Delete Classroom Section -->
+<div *ngIf="activeTab === 'delete'" class="tab-content">
+    <h2>🗑️ Delete Assigned Classroom</h2>
+  
+    <!-- Select Classroom Dropdown -->
+    <div class="form-grid">
+      <div>
+        <label>Select Classroom</label>
+        <select [(ngModel)]="selectedDeleteClassroomId" (change)="fetchSelectedClassroomDetails()">
+          <option *ngFor="let classroom of assignedClassroomsList" [value]="classroom.id">
+            {{ classroom.class }} {{ classroom.section }} (Room {{ classroom.classroomNo }})
+          </option>
+        </select>
+      </div>
+    </div>
+  
+    <!-- Selected Classroom Details -->
+    <div *ngIf="selectedClassroomDetails" class="selected-details">
+      <h4>📋 Selected Classroom Details</h4>
+      <p><strong>Classroom No:</strong> {{ selectedClassroomDetails.classroomNo }}</p>
+      <p><strong>Class:</strong> {{ selectedClassroomDetails.class }}</p>
+      <p><strong>Section:</strong> {{ selectedClassroomDetails.section }}</p>
+      <p><strong>Class Teacher:</strong> {{ selectedClassroomDetails.classTeacherName }}</p>
+  
+      <button (click)="deleteClassroom()" class="delete-btn">🗑️ Delete Selected Classroom</button>
+    </div>
+  </div>
+  <div *ngIf="activeTab === 'view'" class="tab-content">
+    <h2>🏫 View Assigned Classroom</h2>
+  
+    <!-- Select Classroom -->
+    <div class="form-grid">
+      <div>
+        <label>Select Classroom</label>
+        <select [(ngModel)]="selectedViewClassroomId" (change)="fetchClassroomToView()">
+          <option value="">-- Select --</option>
+          <option *ngFor="let classroom of assignedClassroomsList" [value]="classroom.id">
+            {{ classroom.class }} {{ classroom.section }} (Room {{ classroom.classroomNo }})
+          </option>
+        </select>
+      </div>
+    </div>
+  
+    <!-- If Classroom Selected -->
+    <div *ngIf="viewClassroom" class="view-card">
+  
+      <!-- Classroom Details -->
+      <h3>📋 Classroom Details</h3>
+      <table class="details-table">
+        <tr>
+          <td><strong>Classroom No:</strong></td>
+          <td>{{ viewClassroom.classroomNo }}</td>
+        </tr>
+        <tr>
+          <td><strong>Class:</strong></td>
+          <td>{{ viewClassroom.class }}</td>
+        </tr>
+        <tr>
+          <td><strong>Section:</strong></td>
+          <td>{{ viewClassroom.section }}</td>
+        </tr>
+        <tr>
+          <td><strong>Class Teacher:</strong></td>
+          <td>{{ viewClassroom.classTeacherName }}</td>
+        </tr>
+      </table>
+  
+      <!-- Subjects and Staffs -->
+      <div *ngIf="viewSubjects.length > 0" class="list-section">
+        <h3>📚 Subjects and Assigned Staffs</h3>
+        <ul>
+          <li *ngFor="let subj of viewSubjects">
+            <strong>{{ subj.subject }}:</strong> {{ subj.staffName }}
+          </li>
+        </ul>
+      </div>
+  
+      <!-- Students -->
+      <div *ngIf="viewStudents.length > 0" class="list-section">
+        <h3>🧑‍🎓 Students List</h3>
+        <ul>
+          <li *ngFor="let stud of viewStudents">
+            {{ stud.studentName }}
+          </li>
+        </ul>
+      </div>
+  
+    </div>
+  </div>
+  </div>
+    
+  
+  

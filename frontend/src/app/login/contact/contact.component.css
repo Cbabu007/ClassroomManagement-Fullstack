@@ -1,0 +1,56 @@
+.contact-wrapper {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #fdf4ff; /* 💜 light violet background inside frame */
+  border-radius: 12px;
+  border: 2px solid #d9c6f0; /* ✅ soft border */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.contact-wrapper h2 {
+  text-align: center;
+  color: #8e44ad;
+  margin-bottom: 25px;
+}
+
+.contact-box {
+  padding: 15px;
+}
+
+.contact-box p {
+  margin: 10px 0;
+  line-height: 1.6;
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+.contact-box h3 {
+  margin-top: 20px;
+  color: #34495e;
+  font-size: 18px;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 5px;
+}
+
+a {
+  color: #2980b9;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive style */
+@media (max-width: 600px) {
+  .contact-wrapper {
+    padding: 15px;
+    margin: 20px;
+  }
+
+  .contact-box p {
+    font-size: 14px;
+  }
+}

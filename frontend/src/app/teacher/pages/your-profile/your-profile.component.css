@@ -1,0 +1,46 @@
+/* ✅ Container for profile */
+.profile-container {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: #f9f7ff;
+  border: 2px solid #c59cff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* ✅ Circular profile image */
+.profile-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #8e44ad;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Profile information layout */
+.profile-info {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.profile-info h4 {
+  margin-top: 15px;
+  color: #5a0099;
+  font-weight: bold;
+}
+
+.profile-info p {
+  font-size: 15px;
+  margin: 6px 0;
+  color: #333;
+}
+
+.profile-info strong {
+  display: inline-block;
+  width: 150px;
+  color: #7300e6;
+}

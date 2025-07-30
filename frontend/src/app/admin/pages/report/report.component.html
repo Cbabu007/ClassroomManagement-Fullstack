@@ -1,0 +1,135 @@
+<!-- report.component.html -->
+<div class="report-main-frame">
+    <!-- 🔹 Left Side Frames -->
+    <div class="left-frame">
+      <!-- 1st Row: Summary Boxes -->
+      <div class="summary-row">
+        <div class="summary-card">
+          <p>Total Students</p>
+          <h3>{{ totalStudents }}</h3>
+        </div>
+       
+<div class="summary-card gender-box">
+  <p class="gender-title">Gender</p>
+  <div class="gender-layout-final">
+    <canvas id="genderChart"></canvas>
+    <div class="gender-info">
+      <div class="legend-line">
+        <span class="legend-color male"></span> Male
+        <span class="emoji-count">🧑 Male ({{ maleCount }})</span>
+      </div>
+      <div class="legend-line">
+        <span class="legend-color female"></span> Female
+        <span class="emoji-count">👩‍🦱 Female ({{ femaleCount }})</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <div class="summary-card">
+          <p>Total Classroom</p>
+          <h3>{{ totalClassrooms }}</h3>
+        </div>
+      </div>
+  
+      <!-- 2nd Row: Actions & Filters -->
+      <div class="action-section">
+        <div class="button-block">
+          <p>Students</p>
+          <button (click)="viewAllStudents()">View All</button>
+        </div>
+        <div class="button-block">
+          <p>Staff</p>
+          <button (click)="viewAllStaff()">View All</button>
+        </div>
+        <div class="filter-block">
+          <p>Students</p>
+          <select [(ngModel)]="studentGrade">
+            <option value="">Grade</option>
+            <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+          </select>
+          <select [(ngModel)]="studentSection">
+            <option value="">Section</option>
+            <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+          </select>
+          <button (click)="filterStudents()">ok</button>
+        </div>
+        <div class="filter-block">
+          <p>Staff</p>
+          <select [(ngModel)]="staffGrade">
+            <option value="">Grade</option>
+            <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+          </select>
+          <select [(ngModel)]="staffSection">
+            <option value="">Section</option>
+            <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+          </select>
+          <button (click)="filterStaff()">ok</button>
+        </div>
+      </div>
+  
+      <!-- 3rd Row: Large Bottom Table -->
+      <div class="bottom-left-box">
+     <table *ngIf="bottomData.length">
+  <thead>
+    <tr>
+      <th *ngFor="let col of bottomColumns">{{ col | titlecase }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of bottomData">
+      <td *ngFor="let col of bottomColumns">
+        <ng-container *ngIf="col === 'photoPath'; else normalCell">
+          <img [src]="getPhotoUrl(row[col])" class="student-photo" alt="photo" />
+        </ng-container>
+        <ng-template #normalCell>{{ row[col] }}</ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+      </div>
+    </div>
+  
+    <!-- 🔹 Right Side Frame -->
+    <div class="right-frame">
+      <div class="right-table-box">
+        <table>
+          <thead>
+            <tr>
+              <th>Classroom No.</th>
+              <th>Grade</th>
+              <th>Section</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cls of classrooms">
+              <td>{{ cls.classroomNo }}</td>
+              <td>{{ cls.grade }}</td>
+              <td>{{ cls.section }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <div class="right-table-box">
+        <table>
+          <thead>
+            <tr>
+              <th>Serial No</th>
+              <th>Staff</th>
+              <th>No. of Employees</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of staffSummary; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ s.staff }}</td>
+              <td>{{ s.count }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

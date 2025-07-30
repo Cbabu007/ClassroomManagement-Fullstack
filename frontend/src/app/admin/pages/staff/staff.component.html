@@ -1,0 +1,245 @@
+<div class="staff-container">
+    <!-- Tab Menu -->
+    <div class="staff-tabs">
+      <button [class.active]="activeTab === 'add'" (click)="setTab('add')">ADD STAFF</button>
+      <button [class.active]="activeTab === 'edit'" (click)="setTab('edit')">EDIT STAFF</button>
+      <button [class.active]="activeTab === 'delete'" (click)="setTab('delete')">DELETE STAFF</button>
+      <button [class.active]="activeTab === 'view'" (click)="setTab('view')">VIEW STAFF</button>
+    </div>
+  
+    <!-- Staff ID Input for Edit/Delete/View -->
+    <div *ngIf="activeTab !== 'add'" [ngClass]="{'search-box-edit-view': activeTab === 'edit' || activeTab === 'view', 'search-box-delete': activeTab === 'delete'}">
+      <label>Staff ID:</label>
+      <input type="text" [(ngModel)]="searchStaffId" placeholder="Enter Staff ID" />
+      <button (click)="fetchStaff()">OK</button>
+    </div>
+  
+    <!-- Add/Edit Staff Form -->
+    <div *ngIf="activeTab === 'add' || activeTab === 'edit'" class="tab-content">
+  
+      <!-- 🧍‍♂️ Basic Personal Details -->
+      <div class="form-section highlight-violet">
+        <h4>🧍‍♂️ Basic Personal Details</h4>
+        <div><label>Staff ID</label><input [(ngModel)]="staff.staffId" /></div>
+        <div><label>First Name</label><input [(ngModel)]="staff.firstName" /></div>
+        <div><label>Last Name</label><input [(ngModel)]="staff.lastName" /></div>
+        <div><label>Gender</label>
+          <select [(ngModel)]="staff.gender">
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div><label>Date of Birth</label><input type="date" [(ngModel)]="staff.dateOfBirth" /></div>
+        <div><label>Blood Group</label><input [(ngModel)]="staff.bloodGroup" /></div>
+        <div><label>Aadhar Number</label><input [(ngModel)]="staff.aadharNumber" /></div>
+  
+        <!-- Photo Upload with Preview -->
+        <div class="photo-preview-box">
+          <label>Upload Photo</label>
+          <input type="file" accept="image/*" (change)="previewPhoto($event)" />
+          <img *ngIf="photoPreviewUrl" [src]="photoPreviewUrl" class="photo-preview-img" style="width:193px;height:193px;" />
+        </div>
+      </div>
+  
+      <!-- 📞 Contact Details -->
+      <div class="form-section">
+        <h4>📞 Contact Details</h4>
+        <div><label>Mobile Number</label><input [(ngModel)]="staff.mobile" /></div>
+        <div><label>Alternate Mobile</label><input [(ngModel)]="staff.altMobile" /></div>
+        <div><label>Email Address</label><input [(ngModel)]="staff.email" /></div>
+      </div>
+  
+      <!-- 🏠 Address Details -->
+      <div class="form-section highlight-violet">
+        <h4>🏠 Address Details</h4>
+        <div><label>Door No</label><input [(ngModel)]="staff.doorNo" /></div>
+        <div><label>Address Line 1</label><input [(ngModel)]="staff.address1" /></div>
+        <div><label>Address Line 2</label><input [(ngModel)]="staff.address2" /></div>
+        <div><label>Taluk</label><input [(ngModel)]="staff.taluk" /></div>
+        <div><label>District</label><input [(ngModel)]="staff.district" /></div>
+        <div><label>State</label><input [(ngModel)]="staff.state" /></div>
+        <div><label>Pincode</label><input [(ngModel)]="staff.pincode" /></div>
+        <div><label>Country</label><input [(ngModel)]="staff.country" /></div>
+      </div>
+  
+      <!-- 🎓 Educational Qualification -->
+      <!-- 🎓 Educational Qualification -->
+<div class="form-section">
+  <h4>🎓 Educational Qualification</h4>
+
+  <!-- Input Fields for Qualification -->
+  <div><label>Degree</label><input [(ngModel)]="newQualification.degree" /></div>
+  <div><label>Specialization</label><input [(ngModel)]="newQualification.specialization" /></div>
+  <div><label>Institution</label><input [(ngModel)]="newQualification.institution" /></div>
+  <div><label>University</label><input [(ngModel)]="newQualification.university" /></div>
+  <div><label>Year of Passing</label><input [(ngModel)]="newQualification.yearOfPassing" /></div>
+
+  <!-- Add Qualification Button -->
+  <div style="grid-column: span 2; text-align: right;">
+    <button class="add-btn" (click)="addQualification()">Add Qualification</button>
+  </div>
+
+  <!-- Qualifications Table -->
+  <div *ngIf="staff.qualifications.length > 0" style="grid-column: span 2; margin-top: 20px;">
+    <table class="qualification-table">
+      <thead>
+        <tr>
+          <th>Degree</th>
+          <th>Specialization</th>
+          <th>Institution</th>
+          <th>University</th>
+          <th>Year</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let qual of staff.qualifications; let i = index">
+          <td>{{ qual.degree }}</td>
+          <td>{{ qual.specialization }}</td>
+          <td>{{ qual.institution }}</td>
+          <td>{{ qual.university }}</td>
+          <td>{{ qual.yearOfPassing }}</td>
+          <td><button class="remove-btn" (click)="removeQualification(i)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  
+      <!-- 🧑‍🏫 Job/Designation Details -->
+      <div class="form-section highlight-violet">
+        <h4>🧑‍🏫 Job/Designation Details</h4>
+        <div><label>Department</label>
+          <select [(ngModel)]="staff.department">
+            <option value="">Select Department</option>
+            <option *ngFor="let dept of departments">{{ dept }}</option>
+          </select>
+        </div>
+        <div><label>Role/Designation</label>
+          <select [(ngModel)]="staff.role">
+            <option value="">Select Role</option>
+            <option *ngFor="let role of roles">{{ role }}</option>
+          </select>
+        </div>
+        <div><label>Joining Date</label><input type="date" [(ngModel)]="staff.joiningDate" /></div>
+        <div><label>Staff Type</label>
+          <select [(ngModel)]="staff.staffType">
+            <option value="Permanent">Permanent</option>
+            <option value="Temporary">Temporary</option>
+            <option value="Contract">Contract</option>
+          </select>
+        </div>
+      </div>
+  
+      <!-- 🧾 Bank Details -->
+      <div class="form-section">
+        <h4>🧾 Salary/Bank Details</h4>
+        <div><label>Bank Name</label><input [(ngModel)]="staff.bankName" /></div>
+        <div><label>Account Number</label><input [(ngModel)]="staff.accountNumber" /></div>
+        <div><label>IFSC Code</label><input [(ngModel)]="staff.ifscCode" /></div>
+        <div><label>PAN Card Number</label><input [(ngModel)]="staff.panCardNumber" /></div>
+      </div>
+  
+      <!-- 🛡️ Login Credentials -->
+      <div class="form-section highlight-violet">
+        <h4>🛡️ Login Credentials</h4>
+        <div><label>Username</label><input [(ngModel)]="staff.username" /></div>
+        <div><label>Password</label><input type="password" [(ngModel)]="staff.password" /></div>
+        <div><label>Login Role</label>
+          <select [(ngModel)]="staff.loginRole">
+            <option>Admin</option>
+            <option>Staff</option>
+          </select>
+        </div>
+      </div>
+  
+      <!-- Save/Update Button -->
+      <button class="add-btn" *ngIf="activeTab === 'add'" (click)="submitStaff()">Save Staff</button>
+      <button class="add-btn" *ngIf="activeTab === 'edit'" (click)="updateStaff()">Update Staff</button>
+  
+    </div>
+  
+    <div *ngIf="activeTab === 'delete'" class="tab-content">
+      <div class="form-section highlight-delete">
+        <h4>🗑️ Delete Staff</h4>
+        <h5>🆔 {{ staff.staffId }}</h5>
+        <h5>👤 {{ staff.firstName }} {{ staff.lastName }}</h5>
+  
+        <div *ngIf="photoPreviewUrl">
+          <img [src]="photoPreviewUrl" width="150" />
+        </div>
+  
+        <button class="delete-btn" (click)="deleteStaff()">Delete Staff</button>
+      </div>
+    </div>
+  
+    <!-- VIEW STAFF TAB -->
+<div *ngIf="activeTab === 'view'" class="tab-content">
+
+  <div class="form-section highlight-violet">
+    <h4>👁️ View Staff</h4>
+
+    <div class="view-info">
+      <h5>🆔 Staff ID: {{ staff.staffId }}</h5>
+      <h5>👤 Full Name: {{ staff.firstName }} {{ staff.lastName }}</h5>
+    </div>
+
+    <div *ngIf="photoPreviewUrl">
+      <img [src]="photoPreviewUrl" alt="Staff Photo" width="150" height="150" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); margin: 10px 0;">
+    </div>
+
+    <div class="view-details">
+      <p><b>Gender:</b> {{ staff.gender }}</p>
+      <p><b>Date of Birth:</b> {{ staff.dateOfBirth | date }}</p>
+      <p><b>Blood Group:</b> {{ staff.bloodGroup }}</p>
+      <p><b>Aadhar Number:</b> {{ staff.aadharNumber }}</p>
+      <p><b>Mobile:</b> {{ staff.mobile }}</p>
+      <p><b>Alternate Mobile:</b> {{ staff.altMobile }}</p>
+      <p><b>Email:</b> {{ staff.email }}</p>
+      <p><b>Address:</b> {{ staff.doorNo }}, {{ staff.address1 }}, {{ staff.address2 }}, {{ staff.taluk }}, {{ staff.district }}, {{ staff.state }}, {{ staff.country }} - {{ staff.pincode }}</p>
+      <p><b>Department:</b> {{ staff.department }}</p>
+      <p><b>Role:</b> {{ staff.role }}</p>
+      <p><b>Joining Date:</b> {{ staff.joiningDate | date }}</p>
+      <p><b>Staff Type:</b> {{ staff.staffType }}</p>
+      <p><b>Bank Name:</b> {{ staff.bankName }}</p>
+      <p><b>Account Number:</b> {{ staff.accountNumber }}</p>
+      <p><b>IFSC Code:</b> {{ staff.ifscCode }}</p>
+      <p><b>PAN Card Number:</b> {{ staff.panCardNumber }}</p>
+      <p><b>Username:</b> {{ staff.username }}</p>
+      <p><b>Login Role:</b> {{ staff.loginRole }}</p>
+    </div>
+
+    <div *ngIf="staff.qualifications.length > 0">
+      <h5>🎓 Educational Qualifications</h5>
+      <table class="qualification-table">
+        <thead>
+          <tr>
+            <th>Degree</th>
+            <th>Specialization</th>
+            <th>Institution</th>
+            <th>University</th>
+            <th>Year</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let qual of staff.qualifications">
+            <td>{{ qual.degree }}</td>
+            <td>{{ qual.specialization }}</td>
+            <td>{{ qual.institution }}</td>
+            <td>{{ qual.university }}</td>
+            <td>{{ qual.yearOfPassing }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+
+  </div>
+  

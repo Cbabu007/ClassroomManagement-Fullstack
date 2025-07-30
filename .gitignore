@@ -1,0 +1,10 @@
+# AngularJS
+frontend/node_modules/
+frontend/dist/
+
+# ASP.NET Core
+backend/bin/
+backend/obj/
+backend/.vs/
+backend/wwwroot/uploads/
+backend/appsettings*.json

@@ -1,0 +1,38 @@
+<div class="profile-container">
+  <h2><i class="fas fa-user-tie"></i> Staff Profile</h2>
+
+  <div class="profile-card">
+    <img [src]="staff.photoPath" alt="Profile Photo" class="profile-img" />
+
+    <div class="profile-info">
+      <h4>👤 Basic Info</h4>
+      <p><strong>Staff ID:</strong> {{ staff.staffId }}</p>
+      <p><strong>Name:</strong> {{ staff.firstName }} {{ staff.lastName }}</p>
+      <p><strong>Gender:</strong> {{ staff.gender }}</p>
+      <p><strong>DOB:</strong> {{ staff.dateOfBirth | date:'yyyy-MM-dd' }}</p>
+      <p><strong>Blood Group:</strong> {{ staff.bloodGroup }}</p>
+      <p><strong>Aadhar No:</strong> {{ staff.aadharNumber }}</p>
+
+      <h4>📞 Contact Info</h4>
+      <p><strong>Mobile:</strong> {{ staff.mobile }}</p>
+      <p><strong>Alt Mobile:</strong> {{ staff.altMobile }}</p>
+      <p><strong>Email:</strong> {{ staff.email }}</p>
+
+      <h4>🏠 Address</h4>
+      <p><strong>Door No:</strong> {{ staff.doorNo }}</p>
+      <p><strong>Street:</strong> {{ staff.address1 }}</p>
+      <p><strong>Area:</strong> {{ staff.address2 }}</p>
+      <p><strong>Taluk:</strong> {{ staff.taluk }}</p>
+      <p><strong>District:</strong> {{ staff.district }}</p>
+      <p><strong>State:</strong> {{ staff.state }}</p>
+      <p><strong>Pincode:</strong> {{ staff.pincode }}</p>
+      <p><strong>Country:</strong> {{ staff.country }}</p>
+
+      <h4>💼 Job Details</h4>
+      <p><strong>Department:</strong> {{ staff.department }}</p>
+      <p><strong>Role:</strong> {{ staff.role }}</p>
+      <p><strong>Joining Date:</strong> {{ staff.joiningDate | date:'yyyy-MM-dd' }}</p>
+      <p><strong>Staff Type:</strong> {{ staff.staffType }}</p>
+    </div>
+  </div>
+</div>

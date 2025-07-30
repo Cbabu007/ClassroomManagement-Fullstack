@@ -1,0 +1,267 @@
+.highlight-violet {
+  background-color: #b69acc; /* light violet */
+  border-color: #621faf;     /* deeper violet border */
+}
+
+/* Container */
+.student-container {
+  background-color: #fdf9ff;
+  padding: 40px;
+  border-radius: 16px;
+  border: 2px solid #b980f0;
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+/* Tabs */
+.student-tabs {
+  display: flex;
+  gap: 30px;
+  border-bottom: 2px solid #e3d6f3;
+  margin-bottom: 30px;
+}
+.student-tabs button {
+  background: none;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: #6c3483;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+.student-tabs button.active {
+  color: #7300e6;
+  background-color: #eee3ff;
+}
+.student-tabs button.active::after {
+  content: '';
+  display: block;
+  height: 4px;
+  width: 100%;
+  background: #7300e6;
+  margin-top: 5px;
+}
+
+/* Form Sections */
+.form-section {
+  background-color: white;
+  border: 2px solid #d6b3ff;
+  border-radius: 12px;
+  padding: 25px 30px;
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 40px;
+}
+.form-section h4 {
+  grid-column: span 2;
+  font-size: 20px;
+  color: #5b2c6f;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #d6b3ff;
+  padding-bottom: 5px;
+}
+.form-section label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #444;
+}
+.form-section input,
+.form-section select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #c8aaff;
+  font-size: 14px;
+}
+.form-section input[type="file"] {
+  padding: 6px;
+  background-color: #f7f2ff;
+}
+
+/* Save Button */
+.add-btn {
+  background-color: #7300e6;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.add-btn:hover {
+  background-color: #5b00b0;
+}
+
+/* 🔵 Search Box for Edit / View */
+.search-box-edit-view {
+  background-color: #f0f7ff; /* Light blue background */
+  border: 2px solid #aacbff;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.search-box-edit-view label {
+  font-weight: bold;
+  color: #007bff;
+  font-size: 15px;
+}
+
+.search-box-edit-view input[type="text"] {
+  padding: 10px 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #aacbff;
+  width: 220px;
+}
+
+.search-box-edit-view button {
+  background-color: #00b140; /* Green OK */
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.search-box-edit-view button:hover {
+  background-color: #009632;
+}
+
+/* 🔴 Search Box for Delete */
+.search-box-delete {
+  background-color: #fff2f2; /* Light red background */
+  border: 2px solid #ffb3b3;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.search-box-delete label {
+  font-weight: bold;
+  color: #d32f2f;
+  font-size: 15px;
+}
+
+.search-box-delete input[type="text"] {
+  padding: 10px 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ffb3b3;
+  width: 220px;
+}
+
+.search-box-delete button {
+  background-color: #e53935; /* Red OK */
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.search-box-delete button:hover {
+  background-color: #c62828;
+}
+
+/* Student Card List */
+.student-card {
+  background: white;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  cursor: pointer;
+}
+.student-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.student-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.details h4 {
+  margin: 0;
+  font-size: 16px;
+}
+.details p {
+  margin: 3px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+.badge {
+  font-size: 12px;
+  padding: 6px 10px;
+  background: #00c57d;
+  color: white;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-section {
+    grid-template-columns: 1fr;
+  }
+  .student-tabs {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .student-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .student-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .student-avatar {
+    width: 60px;
+    height: 60px;
+  }
+  .add-btn {
+    width: 100%;
+  }
+
+  .photo-preview-box {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* or center if needed */
+    gap: 8px;
+    max-width: 200px;
+  }
+  
+  .photo-preview-img {
+    width: 193px !important;
+    height: 193px !important;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid #8e44ad;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    display: block;
+  }
+  
+  
+}

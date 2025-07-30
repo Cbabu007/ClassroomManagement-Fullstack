@@ -1,0 +1,40 @@
+<div class="message-container">
+  <div class="add-message-form">
+    <input type="text" placeholder="Grade" [(ngModel)]="grade" />
+    <input type="text" placeholder="Section" [(ngModel)]="section" />
+    <input type="date" [(ngModel)]="date" />
+    <input type="text" placeholder="Topic" [(ngModel)]="topic" />
+    <input type="text" placeholder="Staff Name" [(ngModel)]="staffName" />
+    <input type="text" placeholder="Enter your message" [(ngModel)]="message" />
+    <button (click)="addMessage()">➕ Add</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Serial No</th>
+        <th>Grade</th>
+        <th>Section</th>
+        <th>Date</th>
+        <th>Topic</th>
+        <th>Staff Name</th>
+        <th>Message</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of messages; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ m.grade }}</td>
+        <td>{{ m.section }}</td>
+        <td>{{ m.date | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ m.topic }}</td>
+        <td>{{ m.staffName }}</td>
+        <td>{{ m.message }}</td>
+        <td>
+          <button class="delete-btn" (click)="deleteMessage(m.id)">🗑️ Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

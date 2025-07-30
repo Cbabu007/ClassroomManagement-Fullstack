@@ -1,0 +1,28 @@
+.report-frame {
+  width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 2px solid #8e44ad;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+.report-frame label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+.report-frame input, .report-frame select {
+  width: 100%;
+  padding: 6px;
+  margin-top: 5px;
+}
+.report-frame button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #27ae60;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+}

@@ -1,0 +1,21 @@
+<!-- Header -->
+<header class="navbar">
+  <div class="logo">Kalaimagal</div>
+
+  <button class="hamburger" (click)="toggleMenu()">☰</button>
+
+  <nav class="nav-links" [class.open]="menuOpen">
+    <a routerLink="/" routerLinkActive="active">Home</a>
+    <a routerLink="/login" routerLinkActive="active">Login</a>
+    <a routerLink="/posts" routerLinkActive="active">Posts</a>
+    <a routerLink="/contact" routerLinkActive="active">Contact</a>
+  </nav>
+</header>
+
+<!-- Page content -->
+<router-outlet></router-outlet>
+
+<!-- Footer -->
+<footer class="footer">
+  © Kalaimagal School Pvt. Ltd.
+</footer>

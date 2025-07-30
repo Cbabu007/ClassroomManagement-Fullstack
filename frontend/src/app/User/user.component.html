@@ -1,0 +1,52 @@
+<header class="navbar">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <div class="navbar-left">
+    <div class="logo">Kalaimagal</div>
+  </div>
+  <button class="hamburger" (click)="toggleMenu()">☰</button>
+  <nav class="nav-links" [class.open]="menuOpen">
+    <a routerLink="/user/home" routerLinkActive="active">
+      <i class="fas fa-home" style="color:#8e44ad;"></i> Home
+    </a>
+    <a routerLink="/user/homework" routerLinkActive="active">
+      <i class="fas fa-book" style="color:#e67e22;"></i> Homework
+    </a>
+    <a routerLink="/user/message" routerLinkActive="active">
+      <i class="fas fa-envelope" style="color:#2980b9;"></i> Message
+    </a>
+    <a routerLink="/user/tests" routerLinkActive="active">
+      <i class="fas fa-pencil-ruler" style="color:#16a085;"></i> Tests
+    </a>
+    <a routerLink="/user/attendance" routerLinkActive="active">
+      <i class="fas fa-calendar-check" style="color:#00b140;"></i> Attendance
+    </a>
+  </nav>
+  <div class="right-tools">
+    <div class="profile-wrapper" (click)="toggleDropdown()">
+      <img [src]="profilePhoto"
+     alt="Profile"
+     class="profile-pic"
+     (error)="profilePhoto='https://cdn-icons-png.flaticon.com/512/3177/3177440.png'" />
+
+      <span class="dropdown-icon">▼</span>
+      <div class="dropdown-menu" *ngIf="dropdownOpen">
+       <div class="dropdown-header">
+  Signed in as<br />
+  <strong>{{ fullName }}</strong>
+</div>
+
+        <hr />
+        <a routerLink="/user/profile">Your Profile</a>
+        <a routerLink="/user/login-activity">Login Activity</a>
+        <a routerLink="/user/report">Your Report</a>
+        <a (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<router-outlet></router-outlet>
+
+<footer class="footer">
+  © Kalaimagal School Pvt. Ltd.
+</footer>

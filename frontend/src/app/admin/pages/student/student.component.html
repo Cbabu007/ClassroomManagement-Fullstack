@@ -1,0 +1,241 @@
+<div class="student-container">
+  <!-- Tab Menu -->
+  <div class="student-tabs">
+    <button [class.active]="activeTab === 'add'" (click)="setTab('add')">ADD STUDENT</button>
+    <button [class.active]="activeTab === 'edit'" (click)="setTab('edit')">EDIT STUDENT</button>
+    <button [class.active]="activeTab === 'delete'" (click)="setTab('delete')">DELETE STUDENT</button>
+    <button [class.active]="activeTab === 'view'" (click)="setTab('view')">VIEW STUDENT</button>
+  </div>
+
+  <!-- Student ID Input Frame for Edit, Delete, View -->
+  <div *ngIf="activeTab !== 'add'" [ngClass]="{'search-box-edit-view': activeTab === 'edit' || activeTab === 'view', 'search-box-delete': activeTab === 'delete'}">
+    <label>Student ID:</label>
+    <input type="text" [(ngModel)]="searchStudentId" placeholder="Enter Student ID" />
+    <button (click)="fetchStudent()">OK</button>
+  </div>
+
+  <!-- Add/Edit Student Form -->
+  <div *ngIf="activeTab === 'add' || activeTab === 'edit'" class="tab-content">
+    <!-- 1. Basic Personal Details -->
+    <div class="form-section highlight-violet">
+      <h4>🧍‍♂️ Basic Personal Details</h4>
+      <div><label>Student ID</label><input [(ngModel)]="student.studentId" /></div>
+      <div><label>First Name</label><input [(ngModel)]="student.firstName" /></div>
+      <div><label>Last Name</label><input [(ngModel)]="student.lastName" /></div>
+      <div><label>Date of Birth</label><input type="date" [(ngModel)]="student.dob" /></div>
+      <div><label>Gender</label><select [(ngModel)]="student.gender">
+        <option>Male</option><option>Female</option><option>Other</option>
+      </select></div>
+      <div><label>Blood Group</label><select [(ngModel)]="student.bloodGroup">
+        <option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+      </select></div>
+      <div><label>Aadhar Number</label><input [(ngModel)]="student.aadhar" /></div>
+
+      <div class="photo-preview-box">
+        <label>Upload Photo</label>
+        <input type="file" accept="image/*" (change)="previewPhoto($event)" />
+        <img *ngIf="student.photoPath" [src]="student.photoPath" class="photo-preview-img" style="width:193px;height:193px;" />
+   </div>
+    </div>
+
+    <!-- 2. Contact & Address Info -->
+    <div class="form-section">
+      <h4>🏠 Contact & Address Info</h4>
+      <div><label>Mobile Number</label><input [(ngModel)]="student.mobile" /></div>
+      <div><label>Alternate Number</label><input [(ngModel)]="student.altMobile" /></div>
+      <div><label>Email ID</label><input [(ngModel)]="student.email" /></div>
+      <div><label>Door No</label><input [(ngModel)]="student.doorNo" /></div>
+      <div><label>Street / Address1</label><input [(ngModel)]="student.address1" /></div>
+      <div><label>Area / Address2</label><input [(ngModel)]="student.address2" /></div>
+      <div><label>City / Taluk</label><input [(ngModel)]="student.city" /></div>
+      <div><label>District</label><input [(ngModel)]="student.district" /></div>
+      <div><label>State</label><input [(ngModel)]="student.state" /></div>
+      <div><label>Pincode</label><input [(ngModel)]="student.pincode" /></div>
+      <div><label>Country</label><input [(ngModel)]="student.country" /></div>
+    </div>
+
+    <!-- 3. Academic Details -->
+    <div class="form-section">
+      <h4>🎓 Academic Details</h4>
+      <div><label>Admission Number</label><input [(ngModel)]="student.admissionNo" /></div>
+      <div><label>Admission Date</label><input type="date" [(ngModel)]="student.admissionDate" /></div>
+      <div><label>Grade</label><select [(ngModel)]="student.grade">
+        <option *ngFor="let g of grades">{{ g }}</option>
+      </select></div>
+      <div><label>Section</label><select [(ngModel)]="student.section">
+        <option>A</option><option>B</option><option>C</option>
+      </select></div>
+      <div><label>Roll Number</label><input [(ngModel)]="student.rollNo" /></div>
+      <div><label>Medium</label><select [(ngModel)]="student.medium">
+        <option>English</option><option>Tamil</option><option>Hindi</option>
+      </select></div>
+      <div><label>Academic Year</label><select [(ngModel)]="student.academicYear">
+        <option *ngFor="let year of academicYears">{{ year }}</option>
+      </select></div>
+      <div><label>Entrance Test</label><input type="text" [(ngModel)]="student.entranceTest" /></div>
+
+    </div>
+
+    <!-- 4. Parent / Guardian Details -->
+    <div class="form-section">
+      <h4>👪 Parent / Guardian Details</h4>
+      <div><label>Father's Name</label><input [(ngModel)]="student.fatherName" /></div>
+      <div><label>Father's Occupation</label><input [(ngModel)]="student.fatherJob" /></div>
+      <div><label>Father's Mobile No.</label><input [(ngModel)]="student.fatherMobile" /></div>
+      <div><label>Mother's Name</label><input [(ngModel)]="student.motherName" /></div>
+      <div><label>Mother's Occupation</label><input [(ngModel)]="student.motherJob" /></div>
+      <div><label>Mother's Mobile No.</label><input [(ngModel)]="student.motherMobile" /></div>
+      <div><label>Guardian Name</label><input [(ngModel)]="student.guardianName" /></div>
+      <div><label>Relation to Student</label><input [(ngModel)]="student.guardianRelation" /></div>
+      <div><label>Guardian Contact No.</label><input [(ngModel)]="student.guardianMobile" /></div>
+    </div>
+
+    <!-- 5. Other Details -->
+    <div class="form-section">
+      <h4>📄 Other Details</h4>
+      <div><label>Previous School Name</label><input [(ngModel)]="student.prevSchool" /></div>
+      <div><label>Transfer Certificate</label><input type="file" (change)="uploadFile($event, 'tc')" /></div>
+      <div><label>ID Proof</label><input type="file" (change)="uploadFile($event, 'idProof')" /></div>
+      <div><label>Address Proof</label><input type="file" (change)="uploadFile($event, 'addressProof')" /></div>
+      <div>
+        <label>Community Type</label>
+        <input type="text" [(ngModel)]="student.communityType" />
+      </div>
+    
+      <div>
+        <label>Community Name</label>
+        <input type="text" [(ngModel)]="student.communityName" />
+      </div>
+    
+      <div>
+        <label>Religion</label>
+        <select [(ngModel)]="student.religion">
+          <option *ngFor="let r of religions" [value]="r">{{ r }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 6. Status Info -->
+    <div class="form-section">
+      <h4>✅ Status Info</h4>
+      <div><label>Status</label><select [(ngModel)]="student.status">
+        <option>Active</option><option>Inactive</option>
+      </select></div>
+      <div><label>Reason for Leaving (if any)</label><input [(ngModel)]="student.reasonLeaving" /></div>
+    </div>
+
+    <!-- Save / Update Button -->
+    <button class="add-btn" *ngIf="activeTab === 'add'" (click)="submitForm()">Save Student</button>
+    <button class="add-btn" *ngIf="activeTab === 'edit'" (click)="updateStudent()">Update Student</button>
+  </div>
+
+  <!-- View Student -->
+ <!-- VIEW STUDENT TAB -->
+<div *ngIf="activeTab === 'view'" class="tab-content">
+  <!-- 🔍 Search Box (Already defined above) -->
+
+  <!-- 🖼️ Photo Center Preview -->
+  <div class="form-section" style="justify-content:center; grid-template-columns: 1fr; text-align:center">
+    <label>Photo Preview</label>
+    <img *ngIf="student.photoPath" [src]="student.photoPath" class="photo-preview-img" style="width:193px;height:193px;"/>
+
+  </div>
+
+  <!-- 1. Basic Personal Details -->
+  <div class="form-section highlight-violet">
+    <h4>🧍‍♂️ Basic Personal Details</h4>
+    <div><label>Student ID</label><input [value]="student.studentId" readonly /></div>
+    <div><label>Full Name</label><input [value]="student.firstName + ' ' + student.lastName" readonly /></div>
+    <div><label>Date of Birth</label><input [value]="student.dob | date:'yyyy-MM-dd'" readonly /></div>
+    <div><label>Gender</label><input [value]="student.gender" readonly /></div>
+    <div><label>Blood Group</label><input [value]="student.bloodGroup" readonly /></div>
+    <div><label>Aadhar Number</label><input [value]="student.aadhar" readonly /></div>
+  </div>
+
+  <!-- 2. Contact & Address Info -->
+  <div class="form-section">
+    <h4>🏠 Contact & Address Info</h4>
+    <div><label>Mobile Number</label><input [value]="student.mobile" readonly /></div>
+    <div><label>Alternate Number</label><input [value]="student.altMobile" readonly /></div>
+    <div><label>Email ID</label><input [value]="student.email" readonly /></div>
+    <div><label>Door No</label><input [value]="student.doorNo" readonly /></div>
+    <div><label>Street / Address1</label><input [value]="student.address1" readonly /></div>
+    <div><label>Area / Address2</label><input [value]="student.address2" readonly /></div>
+    <div><label>City / Taluk</label><input [value]="student.city" readonly /></div>
+    <div><label>District</label><input [value]="student.district" readonly /></div>
+    <div><label>State</label><input [value]="student.state" readonly /></div>
+    <div><label>Pincode</label><input [value]="student.pincode" readonly /></div>
+    <div><label>Country</label><input [value]="student.country" readonly /></div>
+  </div>
+
+  <!-- 3. Academic Details -->
+  <div class="form-section">
+    <h4>🎓 Academic Details</h4>
+    <div><label>Admission Number</label><input [value]="student.admissionNo" readonly /></div>
+    <div><label>Admission Date</label><input [value]="student.admissionDate | date:'yyyy-MM-dd'" readonly /></div>
+    <div><label>Grade</label><input [value]="student.grade" readonly /></div>
+    <div><label>Section</label><input [value]="student.section" readonly /></div>
+    <div><label>Roll Number</label><input [value]="student.rollNo" readonly /></div>
+    <div><label>Medium</label><input [value]="student.medium" readonly /></div>
+    <div><label>Academic Year</label><input [value]="student.academicYear" readonly /></div>
+  </div>
+
+  <!-- 4. Parent / Guardian Details -->
+  <div class="form-section">
+    <h4>👪 Parent / Guardian Details</h4>
+    <div><label>Father's Name</label><input [value]="student.fatherName" readonly /></div>
+    <div><label>Father's Occupation</label><input [value]="student.fatherJob" readonly /></div>
+    <div><label>Father's Mobile No.</label><input [value]="student.fatherMobile" readonly /></div>
+    <div><label>Mother's Name</label><input [value]="student.motherName" readonly /></div>
+    <div><label>Mother's Occupation</label><input [value]="student.motherJob" readonly /></div>
+    <div><label>Mother's Mobile No.</label><input [value]="student.motherMobile" readonly /></div>
+    <div><label>Guardian Name</label><input [value]="student.guardianName" readonly /></div>
+    <div><label>Relation to Student</label><input [value]="student.guardianRelation" readonly /></div>
+    <div><label>Guardian Contact No.</label><input [value]="student.guardianMobile" readonly /></div>
+  </div>
+
+  <!-- 5. Other Details -->
+  <div class="form-section">
+    <h4>📄 Other Details</h4>
+    <div><label>Previous School Name</label><input [value]="student.prevSchool" readonly /></div>
+    <div>
+      <label>Transfer Certificate</label>
+      <img *ngIf="student.tcPath" [src]="student.tcPath" class="photo-preview-img" style="width:193px;height:193px;" />
+    </div>
+    <div>
+      <label>ID Proof</label>
+      <img *ngIf="student.idProofPath" [src]="student.idProofPath" class="photo-preview-img" style="width:193px;height:193px;" />
+    </div>
+    <div>
+      <label>Address Proof</label>
+      <img *ngIf="student.addressProofPath" [src]="student.addressProofPath" class="photo-preview-img" style="width:193px;height:193px;" />
+    </div>
+    <div><label>Community Type</label><input [value]="student.communityType" readonly /></div>
+    <div><label>Community Name</label><input [value]="student.communityName" readonly /></div>
+    <div><label>Religion</label><input [value]="student.religion" readonly /></div>
+  </div>
+
+  <!-- 6. Status Info -->
+  <div class="form-section">
+    <h4>✅ Status Info</h4>
+    <div><label>Status</label><input [value]="student.status" readonly /></div>
+    <div><label>Reason for Leaving (if any)</label><input [value]="student.reasonLeaving" readonly /></div>
+  </div>
+</div>
+
+  <!-- Delete Student -->
+  <div *ngIf="activeTab === 'delete'" class="tab-content">
+    <div class="form-section">
+      <div *ngIf="photoPreviewUrl">
+        <label>Photo Preview</label>
+        <img *ngIf="student.photoPath" [src]="student.photoPath" class="photo-preview-img" style="width:193px;height:193px;" />
+
+      </div>
+      <div><label>Full Name</label><input [value]="student.firstName + ' ' + student.lastName" readonly /></div>
+      <div><label>Class</label><input [value]="student.grade + ' - ' + student.section" readonly /></div>
+    </div>
+    <button class="add-btn" (click)="deleteStudent()">Delete Student</button>
+  </div>
+</div>
+
+

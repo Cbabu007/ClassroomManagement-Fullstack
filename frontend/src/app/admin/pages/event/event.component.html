@@ -1,0 +1,54 @@
+<div class="event-container">
+    <div class="add-event-section">
+      <input type="text" [(ngModel)]="newMessage" placeholder="Enter event message" />
+  
+      <!-- Day Dropdown -->
+      <select [(ngModel)]="selectedDay">
+        <option *ngFor="let d of days" [value]="d">{{ d }}</option>
+      </select>
+  
+      <!-- Month Dropdown -->
+      <select [(ngModel)]="selectedMonth">
+        <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+      </select>
+  
+      <!-- Year Dropdown -->
+      <select [(ngModel)]="selectedYear">
+        <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+      </select>
+  
+      <button (click)="addToTable()">➕ Add More</button>
+    </div>
+  
+    <table>
+      <thead>
+        <tr>
+          <th>Serial No</th>
+          <th>Date</th>
+          <th>Message</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of tempEvents; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ e.date }}</td>
+          <td>{{ e.message }}</td>
+          <td>
+            <button class="add-btn" (click)="saveToDatabase(i)">Add</button>
+            <button class="delete-btn" (click)="tempEvents.splice(i, 1)">Remove</button>
+          </td>
+        </tr>
+  
+        <tr *ngFor="let e of savedEvents; let i = index">
+          <td>{{ tempEvents.length + i + 1 }}</td>
+          <td>{{ e.date | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ e.message }}</td>
+          <td>
+            <button class="delete-btn" (click)="deleteFromDatabase(e.id)">🗑️ Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

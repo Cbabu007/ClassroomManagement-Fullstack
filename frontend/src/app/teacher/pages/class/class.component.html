@@ -1,0 +1,182 @@
+<div class="staff-container">
+  <!-- Tabs -->
+  <div class="staff-tabs">
+    <button [class.active]="activeTab === 'attendance'" (click)="activeTab = 'attendance'">📅 View Attendance</button>
+    <button [class.active]="activeTab === 'video'" (click)="activeTab = 'video'">🎥 Assign Video Class</button>
+    <button [class.active]="activeTab === 'students'" (click)="activeTab = 'students'">📚 View Class Students</button>
+  </div>
+
+  <!-- 📅 View Attendance -->
+  <div *ngIf="activeTab === 'attendance'" class="form-section">
+    <h4>📅 View Attendance</h4>
+
+    <div class="attendance-filter-frame">
+      <label>Grade:</label>
+      <select [(ngModel)]="selectedGrade">
+        <option value="">-- Select Grade --</option>
+        <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+      </select>
+
+      <label>Section:</label>
+      <select [(ngModel)]="selectedSection">
+        <option value="">-- Select Section --</option>
+        <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+      </select>
+
+      <label>Date:</label>
+      <input type="date" [(ngModel)]="selectedDate" />
+
+      <button (click)="loadAttendance()">OK</button>
+    </div>
+ 
+    <!-- 🟣 Violet Attendance Table -->
+    <table class="attendance-table violet-theme">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th *ngFor="let i of [1,2,3,4,5,6,7,8]">Class {{ i }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of allAttendance; let i = index">
+
+          <td>{{ i + 1 }}</td>
+          <td>{{ student.studentId }}</td>
+          <td>{{ student.studentName }}</td>
+          <td [ngClass]="getStatusClass(student.class1)">{{ student.class1 }}</td>
+          <td [ngClass]="getStatusClass(student.class2)">{{ student.class2 }}</td>
+          <td [ngClass]="getStatusClass(student.class3)">{{ student.class3 }}</td>
+          <td [ngClass]="getStatusClass(student.class4)">{{ student.class4 }}</td>
+          <td [ngClass]="getStatusClass(student.class5)">{{ student.class5 }}</td>
+          <td [ngClass]="getStatusClass(student.class6)">{{ student.class6 }}</td>
+          <td [ngClass]="getStatusClass(student.class7)">{{ student.class7 }}</td>
+          <td [ngClass]="getStatusClass(student.class8)">{{ student.class8 }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 🔽 Add this below the table -->
+ <div class="submit-button-wrapper">
+    <button 
+      class="submit-attendance-btn" 
+      [disabled]="attendanceSubmitted"
+      [ngClass]="{ 'submitted': attendanceSubmitted }"
+      (click)="submitFinalAttendance()">
+      {{ attendanceSubmitted ? 'Submitted' : 'Submit Attendance' }}
+    </button>
+  </div>
+    
+ 
+  </div> 
+  <!-- 🎥 Assign Video Class -->
+  <div *ngIf="activeTab === 'video'" class="form-section">
+    <h4>🎥 Assign Video Class</h4>
+
+    <div><label>Grade</label><select [(ngModel)]="video.grade"><option *ngFor="let g of grades" [value]="g">{{ g }}</option></select></div>
+    <div><label>Section</label><select [(ngModel)]="video.section"><option *ngFor="let s of sections" [value]="s">{{ s }}</option></select></div>
+    <div><label>Subject</label><select [(ngModel)]="video.subject"><option *ngFor="let sub of subjects" [value]="sub">{{ sub }}</option></select></div>
+    <div><label>Staff</label><select [(ngModel)]="video.staff"><option *ngFor="let staff of staffs" [value]="staff.staffName">{{ staff.staffName }}</option></select></div>
+    <div><label>Topic</label><input type="text" [(ngModel)]="video.subjectTopic" /></div>
+    <div><label>Message</label><textarea [(ngModel)]="video.message"></textarea></div>
+    <div><label>URL</label><input type="text" [(ngModel)]="video.url" /></div>
+    <div><label>Date</label><input type="date" [(ngModel)]="video.date" /></div>
+
+    <div style="grid-column: span 2; text-align: right;">
+      <button class="add-btn" (click)="assignVideo()">Assign Video</button>
+    </div>
+
+    <div *ngIf="assignedList.length > 0" class="video-table">
+      <table>
+        <thead><tr><th>Grade</th><th>Section</th><th>Subject</th><th>Staff</th><th>Date</th><th>Topic</th><th>Message</th><th>URL</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let v of assignedList">
+            <td>{{ v.grade }}</td><td>{{ v.section }}</td><td>{{ v.subject }}</td>
+            <td>{{ v.staff }}</td><td>{{ v.date }}</td><td>{{ v.subjectTopic }}</td>
+            <td>{{ v.message }}</td><td><a [href]="v.url" target="_blank">Link</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<!-- 📚 View Class Students -->
+<div *ngIf="activeTab === 'students'" class="form-section">
+  <h4>📚 View Class Students</h4>
+
+  <div class="attendance-filter-frame">
+    <label>Grade:</label>
+    <select [(ngModel)]="studentGrade">
+      <option value="">-- Select Grade --</option>
+      <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+    </select>
+
+    <label>Section:</label>
+    <select [(ngModel)]="studentSection">
+      <option value="">-- Select Section --</option>
+      <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+    </select>
+
+    <label>Medium:</label>
+    <select [(ngModel)]="studentMedium">
+      <option value="">-- Select Medium --</option>
+      <option *ngFor="let m of mediums" [value]="m">{{ m }}</option>
+    </select>
+
+    <button (click)="loadClassStudents()">OK</button>
+  </div>
+
+  <div class="attendance-table-frame" *ngIf="studentList.length > 0">
+    <table class="student-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Student ID</th>
+          <th>Photo</th>
+          <th>Roll No</th>
+          <th>Name</th>
+          <th>DOB</th>
+          <th>Gender</th>
+          <th>Blood Group</th>
+          <th>Mobile</th>
+          <th>Alt Mobile</th>
+          <th>Email</th>
+          <th style="min-width: 250px;">Address</th>
+          <th>Medium</th>
+          <th>Father</th>
+          <th>F. Mobile</th>
+          <th>Mother</th>
+          <th>M. Mobile</th>
+          <th>Guardian</th>
+          <th>G. Mobile</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of studentList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ s.studentId }}</td>
+          <td><img [src]="getFullImageUrl(s.photoPath)" class="student-photo" alt="photo" /></td>
+
+          <td>{{ s.rollNo }}</td>
+          <td>{{ s.name }}</td>
+          <td>{{ s.dob | date: 'dd-MM-yyyy' }}</td>
+          <td>{{ s.gender }}</td>
+          <td>{{ s.bloodGroup }}</td>
+          <td>{{ s.mobile }}</td>
+          <td>{{ s.altMobile }}</td>
+          <td>{{ s.email }}</td>
+          <td style="min-width: 250px;">{{ s.address }}</td>
+          <td>{{ s.medium }}</td>
+          <td>{{ s.fatherName }}</td>
+          <td>{{ s.fatherMobile }}</td>
+          <td>{{ s.motherName }}</td>
+          <td>{{ s.motherMobile }}</td>
+          <td>{{ s.guardianName }}</td>
+          <td>{{ s.guardianMobile }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+</div>
+</div>

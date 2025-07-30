@@ -1,0 +1,46 @@
+<div class="attendance-full-frame">
+  <!-- 🔶 Filter Frame -->
+  <div class="attendance-filter-frame">
+    <label>Select Grade:</label>
+    <select [(ngModel)]="selectedGrade">
+      <option value="">-- Select Grade --</option>
+      <option *ngFor="let g of grades" [value]="g">{{ g }}</option>
+    </select>
+
+    <label>Select Section:</label>
+    <select [(ngModel)]="selectedSection">
+      <option value="">-- Select Section --</option>
+      <option *ngFor="let s of sections" [value]="s">{{ s }}</option>
+    </select>
+
+    <label>Class Timing:</label>
+    <select [(ngModel)]="selectedClassTime">
+      <option value="">-- Select Timing --</option>
+      <option *ngFor="let t of classTimings" [value]="t">{{ t }}</option>
+    </select>
+
+    <button (click)="fetchStudents()">OK</button>
+  </div>
+
+  <!-- 🔷 Student Table Frame -->
+  <div *ngIf="students.length > 0" class="attendance-table-frame">
+    <table>
+      <thead>
+        <tr>
+          <th>Serial No</th>
+          <th>Student Name</th>
+          <th>Present</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ student.name }}</td>
+          <td><input type="checkbox" [(ngModel)]="student.present" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button (click)="submitAttendance()">Submit Attendance</button>
+  </div>
+</div>

@@ -1,0 +1,274 @@
+<!-- 🔰 Main Container -->
+<div class="staff-container">
+
+    <!-- 🌐 Tabs -->
+    <div class="staff-tabs">
+      <button [class.active]="activeTab === 'testMark'" (click)="setTab('testMark')">TEST MARK</button>
+      <button [class.active]="activeTab === 'viewMark'" (click)="setTab('viewMark')">VIEW TEST MARK</button>
+     
+    </div>
+  
+    <!-- 🧪 Test Mark Tab -->
+    <div *ngIf="activeTab === 'testMark'">
+      <div class="form-section">
+        <h4>📝 Add Test Mark</h4>
+  
+        <label>Roll No</label>
+        <input type="text" [(ngModel)]="rollNo" (blur)="fetchStudentDetails()" />
+  
+        <label>Grade</label>
+        <input type="text" [(ngModel)]="grade"  />
+  
+        <label>Section</label>
+        <input type="text" [(ngModel)]="section"  />
+  
+        <label>Date</label>
+        <input type="date" [(ngModel)]="date" />
+  
+        <button 
+  [ngClass]="{ 'blue-btn': !newTestInitialized, 'green-btn': newTestInitialized }"
+  (click)="initializeNewTest()">
+  Newly Added
+</button>
+
+        <label>Select Test Type</label>
+        <select [(ngModel)]="testType" (change)="resetForm()">
+          <option value="">-- Select Type --</option>
+          <option value="Report Card">Report Card</option>
+          <option value="Daily Test">Daily Test</option>
+        </select>
+      </div>
+  
+      <!-- 📘 Report Card Entry -->
+      <div class="form-section" *ngIf="testType === 'Report Card'">
+        <h4>📘 Report Card Entry</h4>
+  
+        <label>Term</label>
+        <select [(ngModel)]="term">
+          <option *ngFor="let t of terms" [value]="t">{{ t }}</option>
+        </select>
+  
+        <label>Subject</label>
+        <input type="text" [(ngModel)]="subject" />
+  
+        <label>Total Mark</label>
+        <select [(ngModel)]="totalMark">
+          <option *ngFor="let mark of markOptions" [value]="mark">{{ mark }}</option>
+        </select>
+  
+        <label>Answered Mark</label>
+        <input type="number" [(ngModel)]="answeredMark" min="0" [max]="totalMark" />
+  
+        <label>Remark</label>
+        <input type="text" [(ngModel)]="remark" />
+  
+        <button class="add-btn" (click)="addReportCard()">Add</button>
+      </div>
+
+        
+
+      <!-- 📋 Report Card Table -->
+      <table class="qualification-table" *ngIf="reportCardList.length > 0">
+        <thead>
+          <tr>
+            <th>Serial</th>
+            <th>Term</th>
+            <th>Test ID</th>
+            <th>Subject</th>
+            <th>Total Mark</th>
+            <th>Answered</th>
+            <th>Remark</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of reportCardList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ r.term }}</td>
+            <td>{{ r.testId }}</td>
+            <td>{{ r.subject }}</td>
+            <td>{{ r.totalMark }}</td>
+            <td>{{ r.answeredMark }}</td>
+            <td>{{ r.remark }}</td>
+            <td>
+              <button (click)="removeReportCard(i)" class="remove-btn">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- 📗 Daily Test Entry -->
+      <div class="form-section" *ngIf="testType === 'Daily Test'">
+        <h4>📗 Daily Test Entry</h4>
+  
+        <label>Test No</label>
+        <input type="text" [(ngModel)]="testNo" />
+  
+        <label>Topic</label>
+        <input type="text" [(ngModel)]="topic" />
+  
+        <label>Subject</label>
+        <input type="text" [(ngModel)]="subject" />
+  
+        <label>Question No</label>
+        <select [(ngModel)]="questionNo">
+          <option *ngFor="let q of questionOptions" [value]="q">{{ q }}</option>
+        </select>
+  
+        <label>Select Mark</label>
+        <select [(ngModel)]="selectMark">
+          <option *ngFor="let m of smallMarkOptions" [value]="m">{{ m }}</option>
+        </select>
+  
+        <label>Answered Mark</label>
+        <input type="number" [(ngModel)]="answeredMark" min="0" [max]="selectMark" />
+  
+        <label>Remark</label>
+        <input type="text" [(ngModel)]="remark" />
+  
+        <button class="add-btn" (click)="addDailyTest()">Add</button>
+      </div>
+  
+      <!-- 📋 Daily Test Table -->
+      <table class="qualification-table" *ngIf="dailyTestList.length > 0">
+        <thead>
+          <tr>
+            <th>Serial</th>
+            <th>Test No</th>
+            <th>Test ID</th>
+            <th>Subject</th>
+            <th>Topic</th>
+            <th>Question No</th>
+            <th>Mark</th>
+            <th>Answered</th>
+            <th>Remark</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of dailyTestList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ d.testNo }}</td>
+            <td>{{ d.testId }}</td>
+            <td>{{ d.subject }}</td>
+            <td>{{ d.topic }}</td>
+            <td>{{ d.questionNo }}</td>
+            <td>{{ d.selectMark }}</td>
+            <td>{{ d.answeredMark }}</td>
+            <td>{{ d.remark }}</td>
+            <td>
+              <button (click)="removeDailyTest(i)" class="remove-btn">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- 📤 Submit Button -->
+      <button class="add-btn" (click)="submitTestMarks()">Submit</button>
+    </div>
+  
+    <!-- 👀 View Test Mark Tab -->
+    <div *ngIf="activeTab === 'viewMark'">
+      <div class="form-section">
+        <h4>🔎 View Test Marks</h4>
+  
+        <label>Roll No</label>
+        <input type="text" [(ngModel)]="viewRollNo" (blur)="fetchViewStudentDetails()" />
+  
+        <label>Grade</label>
+        <input type="text" [(ngModel)]="viewGrade"  />
+  
+        <label>Section</label>
+        <input type="text" [(ngModel)]="viewSection"  />
+  
+        <label>Date</label>
+        <input type="date" [(ngModel)]="viewDate" />
+  
+        <button class="add-btn" (click)="loadViewMarks()">View</button>
+      </div>
+  <!-- 🧑‍🎓 Student Details View Frame -->
+      
+      <!-- 👤 Student Photo & Name Preview -->
+      <!-- 👤 Student Photo & Name Preview -->
+<div class="form-section">
+  <div *ngIf="viewStudent" class="student-view-frame">
+    <img [src]="getImageUrl(viewStudent.photoPath)" 
+         (error)="setDefaultPhoto($event)" 
+         class="student-photo" 
+         alt="photo" />
+    <div>
+      <h3 class="student-name">{{ viewStudent.fullName }}</h3>
+      <p class="student-info">🎓 Roll No: {{ viewRollNo }} | 📘 Grade: {{ viewGrade }} - {{ viewSection }}</p>
+    </div>
+  </div>
+</div>
+
+
+
+      <!-- 📘 Report Card View -->
+      <div class="form-section">
+        <h4>📘 Report Card</h4>
+        <table class="qualification-table" *ngIf="reportCardViewList.length > 0">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>Term</th>
+              <th>Test ID</th>
+              <th>Subject</th>
+              <th>Total Mark</th>
+              <th>Answered</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of reportCardViewList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ r.term }}</td>
+              <td>{{ r.testId }}</td>
+              <td>{{ r.subject }}</td>
+              <td>{{ r.totalMark }}</td>
+              <td>{{ r.answeredMark }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- 📗 Daily Test View -->
+      <div class="form-section">
+        <h4>📗 Daily Test</h4>
+  
+        <label>Select Test No</label>
+        <select [(ngModel)]="selectedTestNo" (change)="filterDailyTest()">
+          <option *ngFor="let t of availableTestNos" [value]="t">{{ t }}</option>
+        </select>
+  
+        <table class="qualification-table" *ngIf="dailyTestViewList.length > 0">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>Test No</th>
+              <th>Test ID</th>
+              <th>Question No</th>
+              <th>Subject</th>
+              <th>Mark</th>
+              <th>Answered</th>
+             
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of dailyTestViewList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ d.testNo }}</td>
+              <td>{{ d.testId }}</td>
+              <td>{{ d.questionNo }}</td>
+              <td>{{ d.subject }}</td>
+              <td>{{ d.selectMark }}</td>
+              <td>{{ d.answeredMark }}</td>
+             
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+  
