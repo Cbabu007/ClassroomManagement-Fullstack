@@ -20,12 +20,15 @@ A fast and modern web application built using **React** and **Vite**, with suppo
 
 ## 🛠 Tech Stack
 
-| Layer       | Technology         |
-|-------------|--------------------|
-| Frontend    | React (with Vite)  |
-| State Mgmt  | useState/useEffect or Redux (optional)
-| Routing     | React Router DOM   |
-| Styling     | CSS3, Bootstrap, Tailwind (optional)
-| API Calls   | Axios / Fetch
-| Extra       | File upload, Chart.js, PDF viewer (if used)
+| Layer       | Technology                     |
+|-------------|--------------------------------|
+| Frontend    | AngularJS                      |
+| Backend     | ASP.NET Core Web API (C#)      |
+| Database    | SQL Server                     |
+| ORM         | Entity Framework Core          |
+| Styling     | Bootstrap, CSS3, jQuery        |
+| File Upload | Image, PDF, Video (via API)    |
+| Charts      | Chart.js / Visual Dashboards   |
+| PDF Support | PDF Upload & Download (iText)  |
+
 
